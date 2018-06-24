@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Firebase Train Schedule
+        </title>
+        <meta charset="utf-8">
+        <!-- Firebase Reference -->
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+        <!-- JQuery Reference -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <!-- Moment.js Reference -->
+        <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+        <!-- Bootstrap Reference -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <!-- Stylesheet Reference-->
+        <link rel="stylesheet" type="text/css" href="assets/css/style.css" > 
+        <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=BenchNine|Frank+Ruhl+Libre" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=BenchNine|Frank+Ruhl+Libre|Sorts+Mill+Goudy" rel="stylesheet">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+        <link rel="shortcut icon" type="image/jpg" href="assets/images/trainfavicon.jpg">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+
+    <body >
+        <div class="container">
+            <div class="headerbackground">
+                <nav class="navbar navbar-default navbar-fixed-top">
+                        <div class="container-fluid">
+                          <div class="navbar-header">
+                            <button type="button" class="navbar-toggle collapsed pull-right" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" >
+                              <span class="sr-only">Toggle navigation</span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                              <span class="icon-bar"></span>
+                            </button>
+                          </div>
+                        </div> 
+                </nav>
+            </div>
+            <div class="jumbotron jumbotron-billboard">
+                <div >
+                    <h1 class="display-h1">East Cost Amtrak</h1>
+                    <hr class="my-4" >
+                    <br><br>
+                    <img src="assets/images/newtrain2.jpg" class="blur-image2">
+                </div>
+            </div>
+            <br>  
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title current">Current Train Schedule</h3>
+                </div>
+                <div>
+                    <table class="table table-hover" id='trainTableH'>
+                            <thead>
+                                <tr>
+                                <th class="tnum">Train #</th>                      
+                                <th class="tname">Train Name</th>
+                                <th class="tdest">Destination</th>
+                                <th class="tfreq">Frequency(min)</th>
+                                <th class="tarr">Next Arrival</th>
+                                <th class="taway">Minutes Away</th>
+                                </tr>
+                            </thead>
+                      </table>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-hover" id='trainTable'>
+                        <div id="dataRow">
+                            <tbody id="table_body" class="tablebody" >
+                            </tbody>
+                        </div>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Main Body of the Page-->
+            <div id="entry_Window" class="entryWindow">
+                <div id="entryTitle">
+                    <h3 Id="operation">Add Train Details</h3>
+                </div>
+
+                <div class="formdiv">
+                    <form method="post" >
+                        <div class="form-group">
+                            <label for="formLabel1" class="form-Label">Train Number:</label>
+                            <input type="text" class="form-control caseConversion" id="trainNum" maxlength="4" pattern="[a-z,0-9]" placeholder="Train Number" onKeyUp="formatTNum(event, this)" required>
+                        </div>                            
+                        <div class="form-group">
+                            <label for="formLabel1" class="form-Label">Train Name:</label>
+                            <input type="text" class="form-control caseConversion" id="trainName" placeholder="Train Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="formLabel2" class="form-Label">Destination:</label>
+                            <input type="text" class="form-control caseConversion" id="trainDestination" placeholder="Destination" requied>
+                        </div>
+                        <div class="form-group control    date time-picker"  data-date-useseconds="false" data-date-pickDate="false" >
+                            <label for="formLabel3" class="form-Label">First Train Time:</label>
+                            <input type="time" class="form-control" id="trainFirstStart" data-date-format="HH:mm" min="00:01" max="24:00" placeholder="00:01 AM" value="00:01 AM" requied>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label for="formLabel3" class="form-Label">First Train Time:</label>
+                            <input type="text" class="form-control" id="trainFirstStart" pattern="[0-9]" minlength="5" maxlength="5" min="00:01" max="24:00" placeholder="hh:mm" onKeyUp="formatTime(event, this)" >
+                        </div>   -->
+                               
+                        <div class="form-group">
+                            <label for="formLabel4" class="form-Label">Frequency:</label>
+                            <input type="number" class="form-control" id="trainFrequency" min="1" minlength="1" maxlength="4" max="1440" pattern="[0-9]"  placeholder="Frequency"  >
+                        </div>
+                        <div class="btndiv">
+                            <button id="enterTrainBtn" type="button" class="search-btn btn btn-primary btn-lg" onclick="return validateForm(trainNum,trainName,trainDestination,trainFirstStart,trainFrequency)" >Add</button>
+                                <button id="updateTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Update</button>                                        
+                                <button id="deleteTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Delete</button>
+                                <span id="validationMessage" class="error"></span>
+                            <button id="clearTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Clear</button>
+                        </div>
+
+
+                    </form> 
+                </div>
+            </div>
+        </div>
+
+        
+        <footer class="footer position-sticky">
+                <div class="container">
+                    <span >Copyright &copy;.</span>
+                </div>
+        </footer>  
+
+        <!-- <script src="assets/javascript/trainapp.js"></script> -->
+       <script src="assets/javascript/trainapp.js"></script>
+    </body>
+</html>        

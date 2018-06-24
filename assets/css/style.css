@@ -1,0 +1,238 @@
+body{
+    background-color: rgb(224, 224, 224);
+} 
+.container{
+    width: 980px;
+    padding-left:   0px;
+
+}
+.footer{
+    text-align: center;
+}
+.col-3-sm{
+    border-spacing: 2px;
+    float: left;
+    padding: 5px;
+    text-align: center;
+    border-spacing: 1px;
+}
+.col-2-sm{
+    border-spacing: 2px;
+    float: left;
+    padding: 5px;
+    text-align: center;
+    border-spacing: 1px;
+}
+
+.jumbotron{
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: 0% 50%;
+    height: 350px;
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: linear-gradient(to top,  rgb(66, 3, 241) , rgb(165, 178, 248)); 
+    color: rgb(50, 10, 228);
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0px;
+}
+
+
+.panel-heading{
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding: 0px;
+    height: 25px;
+    background: linear-gradient(to top, rgb(43, 3, 153) , rgb(192, 242, 248));
+}
+.panel-body{
+    padding: 0px;
+    overflow: auto;
+    max-height: 160px; 
+}
+
+.panel-body th{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 2ch;
+}
+.panel-title{
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    background-color:  rgb(66, 3, 241);
+    background: linear-gradient(to top, rgb(66, 3, 241) , rgb(192, 242, 248));
+}
+thead{
+    height: 30px;
+    margin: 0px;
+    padding: 0px;
+    background-color:  rgb(66, 3, 241);
+    background: linear-gradient(to top, rgb(66, 3, 241) , rgb(192, 242, 248));
+    color: white;
+}
+
+#trainTableH{
+
+    border-spacing: 2px;
+    border-collapse: initial;
+}
+#trainTable{
+    border-spacing: 2px;
+    border-collapse: initial;
+    max-height: 160px;
+    overflow: auto;
+}
+tr{
+    height: 20px;
+
+}
+.tnum{
+    width: 10%;
+    padding: 8px;
+}
+.tnum1{
+    width: 10%;
+    padding: 8px;
+}
+.tname{
+    width: 30%;
+    padding: 8px;
+}
+.tname1{
+    width: 32%;
+    padding: 8px;
+}
+.tdest{
+    width: 20%;
+    padding: 8px;
+}
+.tdest1{
+    width: 22%;
+    padding: 8px;
+}
+.tfreq{
+    width: 12%;
+    padding: 8px;
+}
+.tfreq1{
+    width: 14%;
+    padding: 8px;
+}
+.tarr{
+    width: 12%;
+    padding: 8px;
+}
+.tarr1{
+    width: 13%;
+    padding: 8px;
+}
+.taway{
+    width: 12%;
+    padding: 8px;
+}
+
+.btnopdiv{
+    width: 100px;
+    height: 50px;
+    background-color:  rgb(14, 7, 36);
+    background: linear-gradient(to top, rgb(66, 3, 241) , rgb(192, 242, 248));
+}
+
+.traingrid{
+    border:  rgb(66, 3, 241);
+    border-color:  rgb(66, 3, 241);
+    border-style: solid;
+    padding: 0 0px 10px 0px;
+    border-radius: 4px;
+    padding-right: 5px;
+
+}
+.row-head{
+    background-color:  rgb(66, 3, 241);
+    width: 99.5%;
+    padding: 0px;
+    height: 30px;
+    color: white;
+    font-style: normal;
+    font-size: medium;
+    align-content: center;
+    border-radius: 2px;
+}
+
+
+.entryWindow{
+    border: rgb(66, 3, 241);
+    border-color:  rgb(66, 3, 241);
+    border-style: solid;
+    padding: 0 0px 10px 0px;
+    border-radius: 4px;
+}
+
+.form-group{
+    padding: 0 10px 0 10px;
+    margin-bottom: 0px;
+    display: flex;
+}
+
+.form-Label{
+    width: 200px;
+}
+.form-control{
+    width: 700px;
+}
+
+.caseConversion{
+    text-transform: capitalize;
+}
+#trainNum{
+    width: 100px;
+}
+#trainName{
+    width: 500px;
+}
+#trainDestination{
+    width: 600px;
+}
+#trainFirstStart{
+    width: 120px;
+}
+#trainFrequency{
+    width: 80px;
+}
+.btndiv{
+    padding: 5px 0 0 10px;
+    margin: 0px;
+}
+
+#entryTitle{
+    color: white;
+    background-color:  rgb(66, 3, 241);
+    background: linear-gradient(to top, rgb(66, 3, 241) , rgb(192, 242, 248));
+}
+#entryTitle h3{
+margin-top: 0px;
+height: 35px;
+font-size: 20px;
+}
+
+
+.btn-primary{
+    width: 120px;
+    height: 35px;
+    background-color: rgb(66, 3, 241);
+    background: linear-gradient(to top, rgb(66, 3, 241) , rgb(104, 147, 240));
+    align-content: center;
+    text-align: center;
+}
+.btn-primary{
+    width: 120px;
+}
+
+#clearTrainBtn{
+    float: right;
+    margin-right: 10px;
+}
