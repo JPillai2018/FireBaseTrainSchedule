@@ -7,8 +7,9 @@
         </title>
         <meta charset="utf-8">
         <!-- Firebase Reference -->
-        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
+
         <script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script>
         <!-- JQuery Reference -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <!-- Moment.js Reference -->
@@ -19,8 +20,6 @@
 
         <!-- Stylesheet Reference-->
         <link rel="stylesheet" type="text/css" href="assets/css/style.css" > 
-        <link href="https://fonts.googleapis.com/css?family=Frank+Ruhl+Libre" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=BenchNine|Frank+Ruhl+Libre" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=BenchNine|Frank+Ruhl+Libre|Sorts+Mill+Goudy" rel="stylesheet">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link rel="shortcut icon" type="image/jpg" href="assets/images/trainfavicon.jpg">
@@ -102,26 +101,16 @@
                         </div>
                         <div class="form-group control    date time-picker"  data-date-useseconds="false" data-date-pickDate="false" >
                             <label for="formLabel3" class="form-Label">First Train Time:</label>
-                            <input type="time" class="form-control" id="trainFirstStart" data-date-format="HH:mm" min="00:01" max="24:00" placeholder="00:01 AM" value="00:01 AM" requied>
+                            <input type="time" class="form-control" id="trainFirstStart" data-date-format="hh:mm" min="00:01" max="24:00" placeholder="00:01 AM" value="00:01 AM" requied>
                         </div>
-                        <!-- <div class="form-group">
-                            <label for="formLabel3" class="form-Label">First Train Time:</label>
-                            <input type="text" class="form-control" id="trainFirstStart" pattern="[0-9]" minlength="5" maxlength="5" min="00:01" max="24:00" placeholder="hh:mm" onKeyUp="formatTime(event, this)" >
-                        </div>   -->
-                               
                         <div class="form-group">
                             <label for="formLabel4" class="form-Label">Frequency:</label>
                             <input type="number" class="form-control" id="trainFrequency" min="1" minlength="1" maxlength="4" max="1440" pattern="[0-9]"  placeholder="Frequency"  >
                         </div>
                         <div class="btndiv">
                             <button id="enterTrainBtn" type="button" class="search-btn btn btn-primary btn-lg" onclick="return validateForm(trainNum,trainName,trainDestination,trainFirstStart,trainFrequency)" >Add</button>
-                                <button id="updateTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Update</button>                                        
-                                <button id="deleteTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Delete</button>
-                                <span id="validationMessage" class="error"></span>
                             <button id="clearTrainBtn" type="button" class="search-btn btn btn-primary btn-lg">Clear</button>
                         </div>
-
-
                     </form> 
                 </div>
             </div>

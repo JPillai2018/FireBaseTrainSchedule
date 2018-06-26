@@ -18,10 +18,6 @@ $(document).ready(function(){
   //Setting initial button names
   $("#enterTrainBtn").html("Add");
   $("#trainFirstStart").html("00:01 AM");
-  //$("#deleteTrainBtn").css("display", "none");
-  $("#updateTrainBtn").attr("disabled", "disabled");
-  $("#deleteTrainBtn").attr("disabled", "disabled");
-
   
   // Enter new Train Data in to the database
   $('#enterTrainBtn').on("click", function(event) {
@@ -33,8 +29,6 @@ $(document).ready(function(){
     var destination = $("#trainDestination").val().trim();
     var firstTrain = moment($("#trainFirstStart").val().trim());
     var frequency = $("#trainFrequency").val().trim();
-    console.log("First Train2 = " + firstTrain);
-    console.log("First Train1 = " + firstTrain);
     var firstTrain = moment($("#trainFirstStart").val().trim(), "HH:mm").format("HH:mm");
     if ((trainNum === "") || (trainName === "") || (destination === "") || (firstTrain === "") || (frequency === "")){
       $("#validateMessage").html("Incorrect Time format!!!");
@@ -72,7 +66,7 @@ $(document).ready(function(){
   
   //  Created a firebase event listner for adding trains to database and a row in the html when the user adds an entry
   database.ref().on("child_added", function(childSnapshot) {
-    console.log("Child Snapshot = " + childSnapshot.val());
+    //console.log("Child Snapshot = " + childSnapshot.val());
     // Now we store the childSnapshot values into a variable
     var trainNum = childSnapshot.val().num;
     var trainName = childSnapshot.val().name;
@@ -81,8 +75,8 @@ $(document).ready(function(){
     var frequency = childSnapshot.val().freq;
 
     // First Train time input cis converted to Time format.  
-    var firstTimeConverted = moment(firstTrain, "HH:mm");
-    var currentTime = moment().format("HH:mm");
+    var firstTimeConverted = moment(firstTrain, "HH:mm:ss");
+    var currentTime = moment().format("HH:mm:ss");
 
     // Calculate the difference between currentTime and First Train Time in minutes.
     var timeDiff = moment().diff(moment(firstTimeConverted), "minutes");
@@ -93,14 +87,10 @@ $(document).ready(function(){
     // The remainder should be added to current time (or subtract from frequency) to get the time till next time relative to currenttrain,we store it in a variable
     var minToTrain = frequency - timeRemainder;
 
-    //console.log("Remainder=" + timeRemainder + " Frequency=" + frequency + " Minute To Train=" + minToTrain);
-    //minToTrain = minToTrain.format("HH:mm");
-    // Formatting time to next train in minutes
-    var nxTrain = moment().add(minToTrain, "minutes").format("HH:mm");
-    //var minToTrain = moment().add(timeRemainder, "minutes").format("HH:mm");
+    var nxTrain = moment().add(minToTrain, "minutes").format("hh:mm A");
 
     // Dynamically creating a table
-    $("#trainTable>tbody").append("<tr><td class='tnum1'>" + trainNum + "</td><td class='tname1'>" + trainName + "</td><td class='tdest1'>" + destination + "</td><td class='tfreq1'>" + frequency + "</td><td class='tarr1'>" + nxTrain + "</td><td>" + minToTrain + "</td></tr>");
+    $("#trainTable>tbody").append("<tr><td class='tnum1'>" + trainNum + "</td><td class='tname1'>" + trainName + "</td><td class='tdest1'>" + destination + "</td><td class='tfreq1'>" + frequency + "</td><td class='tarr1'>" + nxTrain + "</td><td class='taway1'>" + parseInt(minToTrain) + "</td></tr>");
      $("#trainTable>tbody").attr({"class": "tablebody "});
   });
   
@@ -116,15 +106,11 @@ $(document).ready(function(){
       $("#trainNum").val(tableRowData[0]);
       $("#trainName").val(tableRowData[1]);
       $("#trainDestination").val(tableRowData[2]);
-      //$("#trainFirstStart").val(tableRowData[3]);
       $("#trainFrequency").val(tableRowData[3]);
       $("#operation").text("Maintain Train Details");
       $("#enterTrainBtn").html("Add");
       $("#trainNum").attr("disabled", "disabled");
       $("#enterTrainBtn").attr("disabled", "disabled");
-      $("#updateTrainBtn").prop("disabled", false);
-      $("#deleteTrainBtn").prop("disabled", false);
-      //$("#deleteTrainBtn").css("display", "block");
     });
   });
   
@@ -142,7 +128,6 @@ $(document).ready(function(){
     $("#updateTrainBtn").attr("disabled", "disabled");
     $("#deleteTrainBtn").attr("disabled", "disabled");
     $("#operation").text("Add Train Details");
-    //$("#deleteTrainBtn").css("display", "none");
   });
   
   // Converting to Title case
