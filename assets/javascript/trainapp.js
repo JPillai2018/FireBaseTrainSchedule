@@ -17,7 +17,7 @@ $(document).ready(function(){
   
   //Setting initial button names
   $("#enterTrainBtn").html("Add");
-  $("#trainFirstStart").html("00:01 AM");
+  $("#trainFirstStart").html("hh:mm");
   
   // Enter new Train Data in to the database
   $('#enterTrainBtn').on("click", function(event) {
@@ -29,6 +29,7 @@ $(document).ready(function(){
     var destination = $("#trainDestination").val().trim();
     var firstTrain = moment($("#trainFirstStart").val().trim());
     var frequency = $("#trainFrequency").val().trim();
+
     var firstTrain = moment($("#trainFirstStart").val().trim(), "HH:mm").format("HH:mm");
     if ((trainNum === "") || (trainName === "") || (destination === "") || (firstTrain === "") || (frequency === "")){
       $("#validateMessage").html("Incorrect Time format!!!");
@@ -52,13 +53,11 @@ $(document).ready(function(){
       // uploads train data to the database
     database.ref().push(newTrain);
     var rootRef = database.ref();
-    console.log("New Train= " + newTrain.name);
-    console.log("DB ref=" + rootRef.toString());
     // clears all the text-boxes
     $("#trainNum").val("");
     $("#trainName").val("");
     $("#trainDestination").val("");
-    $("#trainFirstStart").val("00:01 AM");
+    $("#trainFirstStart").val("");
     $("#trainFrequency").val("");
     return false;
   });
@@ -66,7 +65,7 @@ $(document).ready(function(){
   
   //  Created a firebase event listner for adding trains to database and a row in the html when the user adds an entry
   database.ref().on("child_added", function(childSnapshot) {
-    //console.log("Child Snapshot = " + childSnapshot.val());
+
     // Now we store the childSnapshot values into a variable
     var trainNum = childSnapshot.val().num;
     var trainName = childSnapshot.val().name;
@@ -75,8 +74,8 @@ $(document).ready(function(){
     var frequency = childSnapshot.val().freq;
 
     // First Train time input cis converted to Time format.  
-    var firstTimeConverted = moment(firstTrain, "HH:mm:ss");
-    var currentTime = moment().format("HH:mm:ss");
+    var firstTimeConverted = moment(firstTrain, "HH:mm");
+    var currentTime = moment().format("HH:mm");
 
     // Calculate the difference between currentTime and First Train Time in minutes.
     var timeDiff = moment().diff(moment(firstTimeConverted), "minutes");
@@ -87,10 +86,13 @@ $(document).ready(function(){
     // The remainder should be added to current time (or subtract from frequency) to get the time till next time relative to currenttrain,we store it in a variable
     var minToTrain = frequency - timeRemainder;
 
-    var nxTrain = moment().add(minToTrain, "minutes").format("hh:mm A");
+    //minToTrain = minToTrain.format("HH:mm");
+    // Formatting time to next train in minutes
+    var nxTrain = moment().add(minToTrain, "minutes").format("HH:mm");
+    //var minToTrain = moment().add(timeRemainder, "minutes").format("HH:mm");
 
     // Dynamically creating a table
-    $("#trainTable>tbody").append("<tr><td class='tnum1'>" + trainNum + "</td><td class='tname1'>" + trainName + "</td><td class='tdest1'>" + destination + "</td><td class='tfreq1'>" + frequency + "</td><td class='tarr1'>" + nxTrain + "</td><td class='taway1'>" + parseInt(minToTrain) + "</td></tr>");
+    $("#trainTable>tbody").append("<tr><td class='tnum1'>" + trainNum + "</td><td class='tname1'>" + trainName + "</td><td class='tdest1'>" + destination + "</td><td class='tfreq1'>" + frequency + "</td><td class='tarr1'>" + nxTrain + "</td><td>" + minToTrain + "</td></tr>");
      $("#trainTable>tbody").attr({"class": "tablebody "});
   });
   
@@ -106,11 +108,15 @@ $(document).ready(function(){
       $("#trainNum").val(tableRowData[0]);
       $("#trainName").val(tableRowData[1]);
       $("#trainDestination").val(tableRowData[2]);
+      //$("#trainFirstStart").val(tableRowData[3]);
       $("#trainFrequency").val(tableRowData[3]);
       $("#operation").text("Maintain Train Details");
       $("#enterTrainBtn").html("Add");
       $("#trainNum").attr("disabled", "disabled");
       $("#enterTrainBtn").attr("disabled", "disabled");
+      $("#updateTrainBtn").prop("disabled", false);
+      $("#deleteTrainBtn").prop("disabled", false);
+      //$("#deleteTrainBtn").css("display", "block");
     });
   });
   
@@ -128,6 +134,7 @@ $(document).ready(function(){
     $("#updateTrainBtn").attr("disabled", "disabled");
     $("#deleteTrainBtn").attr("disabled", "disabled");
     $("#operation").text("Add Train Details");
+    //$("#deleteTrainBtn").css("display", "none");
   });
   
   // Converting to Title case
@@ -150,24 +157,50 @@ $(document).ready(function(){
   function validateForm(f1, f2, f3, f4, f5){
     var firstTrain = $("#trainFirstStart").val().trim();
     var firstTrain = moment($("#trainFirstStart").val().trim(), "HH:mm").format("HH:mm");
-    console.log("Validate TIme=" + firstTrain);
     if (isNaN(firstTrain) || firstTrain === ""){
-      console.log ("Incorrect Time. 00:00 AM/PM format");
       return false;
     }
     return true;
   }
 
+  // HTML Input Type="time" was not yielding military format. Therefore following function was required to format text input for military time
   function formatTime(evt, fld){
     var key = window.event ? event.keyCode : event.which; 
-    console.log ("Key Code=" + key);
     if (key === 8 || key === 16 || key === 37 || key === 39 || key ===46){
       return true;
     }
     else{
       if (key >= 48 && key <= 57){
         var fldLength = fld.value.length;
-        console.log("Fields Value = " + fld.value + " " + fldLength);
+        if (fldLength ===2){
+          var firsttwo = fld.value.substr(0,2);
+          var firstone = fld.value.substr(0,1);
+          if (parseInt(firstone) > 2){
+            fld.value = "0" + firsttwo.substr(0,1);
+          }
+        }
+        if (fldLength >= 3){
+          var firstthree = fld.value;
+          if (firstthree.substr(2,1) != ":"){
+            firstthree = firstthree.substr(0,2) + ":";
+            fld.value = firstthree;
+
+          }
+        }
+        if (fldLength === 4){
+          var firstfour = fld.value;
+          if (parseInt(firstfour.substr(3,1)) > 5){
+            firstfour = firstfour.substr(0,3) + "";
+            fld.value = firstfour;
+          }
+        }
+        if (fldLength === 5){
+          var firstfive = fld.value;
+          if ((parseInt(firstfive.substr(0,2)) === 24) && (parseInt(firstfive.substr(3,2)) > 0)){
+            firstfive = "";
+            fld.value = firstfive;
+          }
+        }
         if (fldLength === 2 || fldLength === 2){
           fld.value = fld.value + ":";
           return true;
@@ -183,7 +216,6 @@ $(document).ready(function(){
 
   function formatTNum(evt, fld){
     var key = window.event ? event.keyCode : event.which; 
-    var chr = String.fromCharCode(key);
     var vld = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
 
     if (vld.indexOf(chr) >= 0){

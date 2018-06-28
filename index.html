@@ -99,10 +99,14 @@
                             <label for="formLabel2" class="form-Label">Destination:</label>
                             <input type="text" class="form-control caseConversion" id="trainDestination" placeholder="Destination" requied>
                         </div>
-                        <div class="form-group control    date time-picker"  data-date-useseconds="false" data-date-pickDate="false" >
+                        <div class="form-group">
+                            <label for="formLabel3" class="form-Label">First Train Time:</label>
+                            <input type="text" class="form-control" id="trainFirstStart" pattern="[0-9]" minlength="5" maxlength="5" min="00:01" max="24:00" placeholder="hh:mm" onKeyUp="formatTime(event, this)" >
+                        </div> 
+                        <!-- <div class="form-group control    date time-picker"  data-date-useseconds="false" data-date-pickDate="false" >
                             <label for="formLabel3" class="form-Label">First Train Time:</label>
                             <input type="time" class="form-control" id="trainFirstStart" data-date-format="hh:mm" min="00:01" max="24:00" placeholder="00:01 AM" value="00:01 AM" requied>
-                        </div>
+                        </div> -->
                         <div class="form-group">
                             <label for="formLabel4" class="form-Label">Frequency:</label>
                             <input type="number" class="form-control" id="trainFrequency" min="1" minlength="1" maxlength="4" max="1440" pattern="[0-9]"  placeholder="Frequency"  >

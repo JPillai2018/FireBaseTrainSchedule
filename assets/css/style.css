@@ -164,7 +164,7 @@ tr{
     width: 600px;
 }
 #trainFirstStart{
-    width: 120px;
+    width: 80px;
 }
 #trainFrequency{
     width: 80px;
@@ -200,6 +200,3 @@ font-size: 20px;
     margin-right: 10px;
 }
 
-.trainFirstStart{
-    
-}
