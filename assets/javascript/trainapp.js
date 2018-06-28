@@ -218,7 +218,7 @@ $(document).ready(function(){
     var key = window.event ? event.keyCode : event.which; 
     var vld = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
     var chr = fld.value;
-    console.log("key=" + key + "-" + "chr=" + chr + " Indx=" + vld.indexOf(chr));
+
     if (key === 8 || key === 16 || key === 37 || key === 39 || key ===46){
       return true;
     }
