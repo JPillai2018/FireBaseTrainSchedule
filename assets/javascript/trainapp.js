@@ -217,16 +217,22 @@ $(document).ready(function(){
   function formatTNum(evt, fld){
     var key = window.event ? event.keyCode : event.which; 
     var vld = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-
-    if (vld.indexOf(chr) >= 0){
+    var chr = fld.value;
+    console.log("key=" + key + "-" + "chr=" + chr + " Indx=" + vld.indexOf(chr));
+    if (key === 8 || key === 16 || key === 37 || key === 39 || key ===46){
       return true;
     }
     else{
-      var fldLength = fld.value.length;
-      fld.value = fld.value.substring(0, fldLength-1);
-      return false;
+      if ((key >= 48 && key <= 57) || (key >= 65 && key <= 90)){
+        return true;
+      }
+      else{
+        var fldLength = fld.value.length;
+        fld.value = fld.value.substring(0, fldLength-1);
+        return false;
+      }
     }
-  };
+};
     
   
   
